@@ -1,0 +1,68 @@
+#!/system/bin/sh
+# Collect recovery diagnostics without mounting or writing /data or /metadata.
+
+if [ "$(getprop ro.twrp.boot)" != 1 ]; then
+    echo "Run this command from TWRP's terminal or its ADB shell." >&2
+    exit 1
+fi
+
+umask 077
+report=$(mktemp -d /tmp/a05s-diagnostics.XXXXXX) || exit 1
+archive=/tmp/a05s-diagnostics.tar.gz
+
+{
+    for prop in \
+        ro.twrp.version ro.twrp.fastbootd ro.product.model \
+        ro.build.version.release ro.build.version.security_patch \
+        ro.vendor.build.security_patch ro.boot.bootdevice ro.boot.fstab_suffix \
+        ro.boot.usbcontroller ro.boot.usb.dwc3_msm \
+        sys.usb.controller sys.usb.config sys.usb.state sys.usb.configfs \
+        sys.usb.ffs.ready sys.usb.ffs.mtp.ready \
+        init.svc.adbd init.svc.fastbootd \
+        ro.crypto.state ro.crypto.type ro.crypto.metadata.enabled \
+        ro.crypto.dm_default_key.options_format.version \
+        ro.hardware.keystore ro.hardware.gatekeeper; do
+        printf '%s=%s\n' "$prop" "$(getprop "$prop")"
+    done
+    uname -a
+} > "$report/properties.txt" 2>&1
+
+{
+    cat /proc/mounts
+    ls -l /dev/block/by-name/userdata /dev/block/by-name/metadata /dev/block/mapper
+    for path in /etc/recovery.fstab /etc/twrp.flags /vendor/etc/fstab.*; do
+        [ -f "$path" ] || continue
+        printf '\n--- %s ---\n' "$path"
+        cat "$path"
+    done
+} > "$report/storage.txt" 2>&1
+
+{
+    ls -l /sys/class/udc /dev/usb-ffs/adb /dev/usb-ffs/mtp /dev/usb-ffs/fastboot
+    for path in /sys/class/udc/*/state /sys/class/udc/*/current_speed \
+        /sys/bus/platform/devices/*ssusb/mode \
+        /config/usb_gadget/g1/UDC /config/usb_gadget/g1/idVendor \
+        /config/usb_gadget/g1/idProduct; do
+        [ -f "$path" ] || continue
+        printf '\n--- %s ---\n' "$path"
+        cat "$path"
+    done
+    ls -l /config/usb_gadget/g1/configs/b.1
+    ps -A
+} > "$report/usb.txt" 2>&1
+
+dmesg > "$report/dmesg.txt" 2>&1
+logcat -b all -d -t 1500 > "$report/logcat.txt" 2>&1
+cat /proc/modules > "$report/modules.txt" 2>&1
+if [ -f /tmp/recovery.log ]; then
+    cp /tmp/recovery.log "$report/recovery.log"
+fi
+
+if ! tar -czf "$archive" -C /tmp "${report##*/}"; then
+    echo "Archive failed; individual logs remain in $report" >&2
+    exit 1
+fi
+echo "Logs: $archive"
+echo "From the PC: adb pull $archive"
+echo "Without USB, copy the archive to storage already mounted in TWRP."
+echo "Review the logs for device identifiers before publishing them."

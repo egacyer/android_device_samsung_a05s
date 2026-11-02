@@ -48,6 +48,8 @@ sync_sources() {
     rsync -a --exclude=.git --exclude=.github \
         "$DEVICE_TREE/" device/samsung/a05s/
     bash -n device/samsung/a05s/vendorsetup.sh
+    python3 "$DEVICE_TREE/.github/scripts/test-usb-init.py" \
+        2>&1 | tee "$ARTIFACT_DIR/usb-init-test.txt"
 
     # The upstream product hook respects this lock. Haptics are disabled in
     # BoardConfig.mk, so do not apply the unrelated JDM source patch in CI.
@@ -127,6 +129,9 @@ collect_images() {
         vendor/lib/modules/touch/modules.dep \
         vendor/lib/modules/touch/modules.load \
         vendor/firmware/hx83112f_TXD_FW.bin \
+        init.recovery.usb.rc \
+        init.recovery.qcom.rc \
+        system/bin/a05s-diagnostics \
         vendor/etc/init/init.ravindu644.custom.rc; do
         cmp "$tree/recovery/root/$relative" "$ramdisk/$relative"
     done

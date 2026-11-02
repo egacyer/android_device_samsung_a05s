@@ -67,7 +67,7 @@ on property:sys.usb.config=fastboot
 
 on property:sys.usb.config=none && property:sys.usb.configfs=0
     stop adbd
-    stop fastboot
+    stop fastbootd
     write /sys/class/android_usb/android0/enable 0
     setprop sys.usb.state ${sys.usb.config}
 
@@ -96,6 +96,7 @@ on property:sys.usb.config=none && property:sys.usb.configfs=1
     stop fastbootd
     setprop sys.usb.ffs.ready 0
     rm /config/usb_gadget/g1/configs/b.1/f1
+    rm /config/usb_gadget/g1/configs/b.1/ffs.mtp
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=sideload && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
@@ -112,7 +113,8 @@ on property:sys.usb.config=adb && property:sys.usb.ffs.ready=1 && property:sys.u
     write /config/usb_gadget/g1/UDC ${sys.usb.controller}
     setprop sys.usb.state ${sys.usb.config}
 
-on property:sys.usb.config=mtp,adb && property:sys.usb.ffs.ready=1 && property:sys.usb.configfs=1
+# Both FunctionFS functions must have descriptors before binding the gadget.
+on property:sys.usb.config=mtp,adb && property:sys.usb.ffs.ready=1 && property:sys.usb.ffs.mtp.ready=1 && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/idProduct 0x6860
     write /config/usb_gadget/g1/configs/b.1/strings/0x409/configuration "mtp,adb"
     symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1

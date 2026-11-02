@@ -13,6 +13,10 @@
 # Bugs
  - Data Mounting
  - Encrypted /data decryption on One UI 7 / Android 15
+ - USB/fastbootd compatibility across firmware versions needs hardware testing
+
+See [USB and encrypted data investigation](docs/usb-and-encrypted-data.md) for
+the current status and collecting logs without mounting `/data`.
 
 # Touchscreen status
  - Himax HX83112F (TXD): driver and firmware loading, button activation, and the unlock slider verified on SM-A057M with One UI 7 / Android 15

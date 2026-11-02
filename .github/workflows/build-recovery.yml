@@ -3,7 +3,7 @@ name: Build TWRP a05s (Himax)
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, 'fix/**']
 
 permissions:
   contents: read
