@@ -20,10 +20,20 @@ PRODUCT_PACKAGES += \
 
 # Recovery modules/dependencies
 TARGET_RECOVERY_DEVICE_MODULES += \
-    libandroidicu 
+    libandroidicu \
+    service \
+    lshal
+
+# Inspect AIDL and HIDL service registration during manual crypto bring-up.
+RECOVERY_BINARY_SOURCE_FILES += \
+    $(TARGET_OUT_EXECUTABLES)/service \
+    $(TARGET_OUT_EXECUTABLES)/lshal
 
 RECOVERY_LIBRARY_SOURCE_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libandroidicu.so 
+    $(TARGET_OUT_SHARED_LIBRARIES)/libandroidicu.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libbinderdebug.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidl-gen-hash.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libhidl-gen-utils.so
 
 PRODUCT_PACKAGES += \
     otapreopt_script \

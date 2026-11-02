@@ -1,0 +1,145 @@
+{
+  "firmware": "SM-A057M A057MUBSFDZE2, vendor API 33",
+  "files": [
+    {
+      "source": "/vendor/bin/hw/android.hardware.gatekeeper@1.0-service",
+      "destination": "/vendor/bin/hw/android.hardware.gatekeeper@1.0-service",
+      "sha256": "16cb6b6823d6585e87e3286477ce07fa17dc512cf5041fc1a37a445c2757ef50"
+    },
+    {
+      "source": "/vendor/bin/hw/android.hardware.security.keymint-service",
+      "destination": "/vendor/bin/hw/android.hardware.security.keymint-service",
+      "sha256": "fd78703cd2ac7f25bf08cbbd02ba417fb19b27ae399c99cda69feeb356586945"
+    },
+    {
+      "source": "/vendor/lib64/android.hardware.gatekeeper@1.0.so",
+      "destination": "/vendor/lib64/android.hardware.gatekeeper@1.0.so",
+      "sha256": "3b78f3e923725cd614dc8823e55ab867ab3dbd24bcb983ff8c4dd7421953c9ff"
+    },
+    {
+      "source": "/vendor/lib64/android.hardware.keymaster@3.0.so",
+      "destination": "/vendor/lib64/android.hardware.keymaster@3.0.so",
+      "sha256": "dc9cd958934dbe6add440eb812f7481fc13ce6d1ee132770f9c25af60c55bae0"
+    },
+    {
+      "source": "/vendor/lib64/android.hardware.keymaster@4.0.so",
+      "destination": "/vendor/lib64/android.hardware.keymaster@4.0.so",
+      "sha256": "93eab6187a2684a4f2b7f3cb0adb8ed02567ddc94bc10c30aba064a0438e8369"
+    },
+    {
+      "source": "/vendor/lib64/android.hardware.keymaster@4.1.so",
+      "destination": "/vendor/lib64/android.hardware.keymaster@4.1.so",
+      "sha256": "d4d16af2c9c4362800760827eb834254ebb601b422add5d23240541ad42f3290"
+    },
+    {
+      "source": "/vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl.so",
+      "destination": "/vendor/lib64/hw/android.hardware.gatekeeper@1.0-impl.so",
+      "sha256": "82fba256318c2673c2181eb202461fe9b2fbec379dd0eeb693f092b8f4c9b46a"
+    },
+    {
+      "source": "/vendor/lib64/hw/gatekeeper.mdfpp.so",
+      "destination": "/vendor/lib64/hw/gatekeeper.mdfpp.so",
+      "sha256": "620520c237c2e2d7c92d5291a9b85819a5e096b41e24a078e8da61982726db6f"
+    },
+    {
+      "source": "/vendor/lib64/libQSEEComAPI.so",
+      "destination": "/vendor/lib64/libQSEEComAPI.so",
+      "sha256": "ca4404f7a6549561a2528f1415e136a15d242205d5bfb2f398aa8ff1d2ef8a27"
+    },
+    {
+      "source": "/vendor/lib64/libcppbor_external.so",
+      "destination": "/vendor/lib64/libcppbor_external.so",
+      "sha256": "345687cd146505007a9be2233702c51d2358d7ff4413c1ab5479d8bb9c174b86"
+    },
+    {
+      "source": "/vendor/lib64/libcppcose_rkp.so",
+      "destination": "/vendor/lib64/libcppcose_rkp.so",
+      "sha256": "61419072de4d1e9ea621d44084ed4877bf23e008a3890b433e20b17f226c7e25"
+    },
+    {
+      "source": "/vendor/lib64/libkeymaster4_1support.so",
+      "destination": "/vendor/lib64/libkeymaster4_1support.so",
+      "sha256": "fce08c26b24f2edc3f5cfd739bb52fd3aa08a02c7963803a50ba9d83af806685"
+    },
+    {
+      "source": "/vendor/lib64/libkeymaster4support.so",
+      "destination": "/vendor/lib64/libkeymaster4support.so",
+      "sha256": "e5ba383ff7e623a0853e404ed10bda1177060501729470defc0f73df37adb530"
+    },
+    {
+      "source": "/vendor/lib64/libkeymaster_messages.so",
+      "destination": "/vendor/lib64/libkeymaster_messages.so",
+      "sha256": "0dec9d785e2f708083530e97aae1b987e9dda4b0b43f05cf7cbe5bd50515a1a3"
+    },
+    {
+      "source": "/vendor/lib64/libkeymaster_portable.so",
+      "destination": "/vendor/lib64/libkeymaster_portable.so",
+      "sha256": "d0b64a261cf9e2afbc570b16311a2f6b4a6e45ebe6d2a0c6eea8264cdb2afb93"
+    },
+    {
+      "source": "/vendor/lib64/libpuresoftkeymasterdevice.so",
+      "destination": "/vendor/lib64/libpuresoftkeymasterdevice.so",
+      "sha256": "70ecb3ae81a49b2300e7f44de0a579724db6072eb3f1984bf82bd45722665560"
+    },
+    {
+      "source": "/vendor/lib64/libsecril-client.so",
+      "destination": "/vendor/lib64/libsecril-client.so",
+      "sha256": "e26ed55be725218e9791cbbe81ef30add59fb16b831ddcf60714427726220401"
+    },
+    {
+      "source": "/vendor/lib64/libskeymint10device.so",
+      "destination": "/vendor/lib64/libskeymint10device.so",
+      "sha256": "9bdff0284afbcf8e67574c6e33a8ac692b47dbe46d7fabf98543d2cd9ab4d780"
+    },
+    {
+      "source": "/vendor/lib64/libskeymint_cli.so",
+      "destination": "/vendor/lib64/libskeymint_cli.so",
+      "sha256": "ab1c75c90ad523d36ff962ca3553f4478869ca8f6528cd74d7091292b2c1faec"
+    },
+    {
+      "source": "/vendor/lib64/libsoft_attestation_cert.so",
+      "destination": "/vendor/lib64/libsoft_attestation_cert.so",
+      "sha256": "cb81d1b476b769a9641a693f995a63c6ec6ea8d78c5d16bc392ccb4cc4141ad9"
+    },
+    {
+      "source": "/vendor/lib64/vendor.samsung.hardware.keymint-V2-ndk.so",
+      "destination": "/vendor/lib64/vendor.samsung.hardware.keymint-V2-ndk.so",
+      "sha256": "66cdd1c4329c126a411c5362ae22e19c8ae86eafc12fc8eb6194f9cafe46b48a"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/android.hardware.security.keymint-V2-ndk.so",
+      "destination": "/vendor/lib64/android.hardware.security.keymint-V2-ndk.so",
+      "sha256": "9bc7a095de13b799693c59d3caeeb2bcdf570aa1211df589f0135607f79331d9"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/android.hardware.security.secureclock-V1-ndk.so",
+      "destination": "/vendor/lib64/android.hardware.security.secureclock-V1-ndk.so",
+      "sha256": "53a8f4749bcf5f034b02e3690591e0918e4340ad214507051e92fa80be6f35ac"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/android.hardware.security.sharedsecret-V1-ndk.so",
+      "destination": "/vendor/lib64/android.hardware.security.sharedsecret-V1-ndk.so",
+      "sha256": "8fa34945abb1cbe81f3bdef6a3b75e548311f82eab4dedc61d282b8c49156834"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/android.system.suspend-V1-ndk.so",
+      "destination": "/vendor/lib64/android.system.suspend-V1-ndk.so",
+      "sha256": "6a3cc2176f43712a179dd5b7c89147d1742c2754847dd2034c91620ec0640dfa"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/libdmabufheap.so",
+      "destination": "/vendor/lib64/libdmabufheap.so",
+      "sha256": "feca845ba84276dde4c6768f49e7a391b091b1956afb38e1f57fcf630cada23a"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/libhardware_legacy.so",
+      "destination": "/vendor/lib64/libhardware_legacy.so",
+      "sha256": "5feb8254c9694cd93155951a57930a0f9645eebdd542a6d6d4b5d6a117a0f009"
+    },
+    {
+      "source": "/apex/com.android.vndk.v33/lib64/libion.so",
+      "destination": "/vendor/lib64/libion.so",
+      "sha256": "07dd6a2cb01cb0c1ffa6b71716aa82c6c67af950a154e1b734747779300facf9"
+    }
+  ]
+}

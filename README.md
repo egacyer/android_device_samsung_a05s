@@ -18,6 +18,10 @@
 See [USB and encrypted data investigation](docs/usb-and-encrypted-data.md) for
 the current status and collecting logs without mounting `/data`.
 
+This experimental branch also contains a [manual Samsung crypto HAL
+test](docs/experimental-crypto.md), restricted to A057MUBSFDZE2. It does not
+enable /data decryption.
+
 # Touchscreen status
  - Himax HX83112F (TXD): driver and firmware loading, button activation, and the unlock slider verified on SM-A057M with One UI 7 / Android 15
  - Button and slider operation require the accompanying TWRP input-release fix in `.github/patches/preserve-tracking-id-release.patch`, applied by the included build workflow

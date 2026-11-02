@@ -50,6 +50,11 @@ sync_sources() {
     bash -n device/samsung/a05s/vendorsetup.sh
     python3 "$DEVICE_TREE/.github/scripts/test-usb-init.py" \
         2>&1 | tee "$ARTIFACT_DIR/usb-init-test.txt"
+    python3 "$DEVICE_TREE/.github/scripts/verify-crypto-blobs.py" \
+        "$DEVICE_TREE" "$DEVICE_TREE/recovery/root" \
+        2>&1 | tee "$ARTIFACT_DIR/crypto-blobs-test.txt"
+    python3 "$DEVICE_TREE/.github/scripts/test-crypto-guards.py" \
+        2>&1 | tee "$ARTIFACT_DIR/crypto-guards-test.txt"
 
     # The upstream product hook respects this lock. Haptics are disabled in
     # BoardConfig.mk, so do not apply the unrelated JDM source patch in CI.
@@ -131,10 +136,18 @@ collect_images() {
         vendor/firmware/hx83112f_TXD_FW.bin \
         init.recovery.usb.rc \
         init.recovery.qcom.rc \
+        init.recovery.a05s_crypto.rc \
         system/bin/a05s-diagnostics \
+        system/bin/a05s-crypto-test \
         vendor/etc/init/init.ravindu644.custom.rc; do
         cmp "$tree/recovery/root/$relative" "$ramdisk/$relative"
     done
+    test -x "$ramdisk/system/bin/a05s-crypto-test"
+    test -x "$ramdisk/system/bin/service"
+    test -x "$ramdisk/system/bin/lshal"
+    python3 "$DEVICE_TREE/.github/scripts/verify-crypto-blobs.py" \
+        "$DEVICE_TREE" "$ramdisk" \
+        2>&1 | tee "$ARTIFACT_DIR/crypto-ramdisk-test.txt"
     tar -tf "$product/recovery.tar" | grep -Fx recovery.img
     cp "$product/recovery.img" "$product/recovery.tar" "$ARTIFACT_DIR/"
     cd "$ARTIFACT_DIR"

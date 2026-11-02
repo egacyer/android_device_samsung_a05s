@@ -64,7 +64,10 @@ the crypto code.
 Stock uses `/vendor/bin/hw/android.hardware.security.keymint-service`,
 Samsung's `mdfpp` Gatekeeper, and an AIDL KeyMint v2 manifest. The existing
 Qualcomm helper starts HIDL Keymaster services and the matching stock
-KeyMint/Gatekeeper executables and libraries are absent from the ramdisk.
+KeyMint/Gatekeeper executables and libraries were absent from the tested image.
+This experimental branch now includes them for a disabled-by-default
+[manual HAL startup test](experimental-crypto.md); no new recovery boot has
+validated them yet.
 Enabling the build flags alone does not supply those services or demonstrate
 compatibility with Samsung's keys.
 

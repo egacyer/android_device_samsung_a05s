@@ -1,0 +1,34 @@
+# Experimental HAL bring-up only. No automatic /data decryption is enabled.
+on property:a05s.crypto.test=1
+    start a05s-crypto-prepare
+
+on property:a05s.crypto.test=0
+    stop a05s-crypto-prepare
+    setprop a05s.crypto.test.ready 0
+    stop a05s-keymint
+    stop a05s-gatekeeper
+
+service a05s-crypto-prepare /system/bin/a05s-crypto-test
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
+on property:a05s.crypto.test.ready=1
+    start a05s-keymint
+    start a05s-gatekeeper
+
+service a05s-keymint /vendor/bin/hw/android.hardware.security.keymint-service
+    user root
+    group root drmrpc
+    setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    disabled
+    seclabel u:r:recovery:s0
+
+service a05s-gatekeeper /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    user root
+    group root system
+    setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    disabled
+    seclabel u:r:recovery:s0

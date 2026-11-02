@@ -19,6 +19,8 @@ archive=/tmp/a05s-diagnostics.tar.gz
         sys.usb.controller sys.usb.config sys.usb.state sys.usb.configfs \
         sys.usb.ffs.ready sys.usb.ffs.mtp.ready \
         init.svc.adbd init.svc.fastbootd \
+        init.svc.a05s-keymint init.svc.a05s-gatekeeper \
+        a05s.crypto.test.ready a05s.crypto.test.error \
         ro.crypto.state ro.crypto.type ro.crypto.metadata.enabled \
         ro.crypto.dm_default_key.options_format.version \
         ro.hardware.keystore ro.hardware.gatekeeper; do
@@ -53,9 +55,14 @@ archive=/tmp/a05s-diagnostics.tar.gz
 
 dmesg > "$report/dmesg.txt" 2>&1
 logcat -b all -d -t 1500 > "$report/logcat.txt" 2>&1
+timeout 10 service list > "$report/binder-services.txt" 2>&1
+timeout 10 lshal > "$report/hidl-services.txt" 2>&1
 cat /proc/modules > "$report/modules.txt" 2>&1
 if [ -f /tmp/recovery.log ]; then
     cp /tmp/recovery.log "$report/recovery.log"
+fi
+if [ -f /tmp/a05s-crypto-test.log ]; then
+    cp /tmp/a05s-crypto-test.log "$report/crypto-test.txt"
 fi
 
 if ! tar -czf "$archive" -C /tmp "${report##*/}"; then

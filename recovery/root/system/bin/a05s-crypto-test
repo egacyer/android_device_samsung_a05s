@@ -1,0 +1,46 @@
+#!/system/bin/sh
+# Manual HAL startup test for the firmware from which these blobs were taken.
+# This does not mount /data, invoke twrp decrypt, or read encryption key files.
+
+exec >> /tmp/a05s-crypto-test.log 2>&1
+setprop a05s.crypto.test.ready 0
+if [ "$(getprop ro.twrp.boot)" != 1 ] || \
+    [ "$(getprop ro.bootloader)" != A057MUBSFDZE2 ]; then
+    echo "Unsupported environment: requires TWRP and A057MUBSFDZE2."
+    setprop a05s.crypto.test.error unsupported-firmware
+    exit 1
+fi
+
+# Use the verified firmware properties, never the 2099 build placeholder.
+resetprop ro.build.version.release 15
+resetprop ro.build.version.security_patch 2026-05-05
+resetprop ro.vendor.build.security_patch 2026-05-05
+if [ "$(getprop ro.build.version.release)" != 15 ] || \
+    [ "$(getprop ro.build.version.security_patch)" != 2026-05-05 ] || \
+    [ "$(getprop ro.vendor.build.security_patch)" != 2026-05-05 ]; then
+    echo "Failed to set matching firmware properties; services remain stopped."
+    setprop a05s.crypto.test.error property-mismatch
+    exit 1
+fi
+
+# Refuse to start with EFS mounted read/write. No stock mkdir/chown actions
+# are imported, and no new EFS key directories are created by this script.
+if ! awk '$2 == "/mnt/vendor/efs" && $4 ~ /(^|,)ro(,|$)/ { ok=1 }
+         END { exit !ok }' /proc/mounts; then
+    if awk '$2 == "/mnt/vendor/efs" { found=1 }
+            END { exit !found }' /proc/mounts; then
+        echo "EFS is already mounted read/write; services remain stopped."
+        setprop a05s.crypto.test.error efs-not-readonly
+        exit 1
+    fi
+    mkdir -p /mnt/vendor/efs
+    if ! mount -t ext4 -o ro,noload /dev/block/bootdevice/by-name/efs /mnt/vendor/efs; then
+        echo "Could not mount EFS read-only; services remain stopped."
+        setprop a05s.crypto.test.error efs-mount
+        exit 1
+    fi
+fi
+
+echo "Starting firmware-matched KeyMint/Gatekeeper HAL test."
+setprop a05s.crypto.test.error none
+setprop a05s.crypto.test.ready 1
